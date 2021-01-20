@@ -8,7 +8,7 @@ import time
 from inference import Inference
 from input_feeder import InputFeeder
 
-MODEL = "./models/"
+MODEL = "./models/intel/text-recognition-0012/FP32/text-recognition-0012"
 
 def build_argparser():
 

@@ -20,6 +20,8 @@ class InputFeeder:
         self.input_type=input_type
         if input_type=='video' or input_type=='image':
             self.input_file=input_file
+            
+        self.cap = None
     
     def load_data(self):
         if self.input_type=='video':

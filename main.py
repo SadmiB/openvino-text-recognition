@@ -33,6 +33,8 @@ def main(args):
         input_feeder = InputFeeder('image', input)
     else:
         input_feeder = InputFeeder('video', input)
+        
+    input_feeder.load_data()
     
     frames = 0
         

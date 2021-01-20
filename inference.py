@@ -2,6 +2,8 @@ import cv2
 from openvino.inference_engine import IECore
 import logging as log
 
+from BeamSearch import ctcBeamSearch
+
 
 class Inference:
 
@@ -100,16 +102,9 @@ class Inference:
         '''
         log.info("Preprocessing output...")
          
-
-        print(outputs.buffer)
-        print(outputs.buffer.shape)
-
-        '''W, B, L = outputs
-        
-        log.info(W)
-        log.info(B)
-        log.info(L)'''
-        
+        classes = "0123456789abcdefghijklmnopqrstuvwxyz#"
+        actual = ctcBeamSearch(outputs.buffer, classes, None)
+        log.info(actual)
         
        
 

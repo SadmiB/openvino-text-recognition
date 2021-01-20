@@ -31,18 +31,25 @@ def main(args):
         input_feeder = InputFeeder('cam', input)
     elif input.endswith('.jpg') or input.endswith('.jpeg') or input.endswith('.bmp'):
         input_feeder = InputFeeder('image', input)
+        is_image = True
     else:
         input_feeder = InputFeeder('video', input)
         
     input_feeder.load_data()
     
-    frames = 0
+   
+    if is_image:
+        outputs  = inference.predict(input_feeder.cap)
         
+        inference.preprocess_output(outputs)
+        return 0
+    
+    frames = 0
     for ret, frame in input_feeder.next_batch():
         
         if not ret:
             break
-            
+        
         frames += 1
         
         key = cv2.waitKey(60)

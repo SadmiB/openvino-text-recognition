@@ -31,8 +31,8 @@ class Inference:
             raise ValueError("Could not Initialise the network. Have you enterred the correct model path?", e)
         
         
-        self.input_name = next(iter(self.model.inputs))
-        self.input_shape = self.model.inputs[self.input_name].shape
+        self.input_name = next(iter(self.model.input_info))
+        self.input_shape = self.model.input_info[self.input_name].shape
         self.output_name = next(iter(self.model.outputs))
         self.output_shape = self.model.outputs[self.output_name].shape
 

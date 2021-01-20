@@ -32,7 +32,7 @@ class Inference:
         
         
         self.input_name = next(iter(self.model.input_info))
-        self.input_shape = self.model.input_info[self.input_name].shape
+        self.input_shape = self.model.input_info[self.input_name].input_data.shape
         self.output_name = next(iter(self.model.outputs))
         self.output_shape = self.model.outputs[self.output_name].shape
 
@@ -59,7 +59,7 @@ class Inference:
 
         self.net.infer(input_dict)
 
-        outputs = self.net.requests[0].outputs[self.output_name]
+        outputs = self.net.requests[0].output_blobs[self.output_name]
 
         return outputs
 
@@ -83,12 +83,12 @@ class Inference:
         Before feeding the data into the model for inference,
         you might have to preprocess it. This function is where you can do that.
         '''
-
+        
         log.info("Preprocessing input...")
         n, c, h, w = self.input_shape
-       
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         img = cv2.resize(image, (w, h))
-        img = img.transpose((2,0,1))
+        #img = img.transpose((2,0,1))
         img = img.reshape((n, c, h, w))
         
         return img
@@ -100,11 +100,15 @@ class Inference:
         '''
         log.info("Preprocessing output...")
          
-        W, B, L = outputs
+
+        print(outputs.buffer)
+        print(outputs.buffer.shape)
+
+        '''W, B, L = outputs
         
         log.info(W)
         log.info(B)
-        log.info(L)
+        log.info(L)'''
         
         
        

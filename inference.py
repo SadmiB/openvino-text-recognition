@@ -1,9 +1,8 @@
 import cv2
 from openvino.inference_engine import IECore
 import logging as log
-
-from BeamSearch import ctcBeamSearch
-
+import numpy as np
+import math
 
 class Inference:
 
@@ -94,20 +93,24 @@ class Inference:
         img = img.reshape((n, c, h, w))
         
         return img
-    
+
+    # greedy decoder
+    def greedy_decoder(self, data):
+	# index for largest probability each row
+        return [np.argmax(s) for s in data]
+
+
     def preprocess_output(self, outputs):
         '''
         Before feeding the output of this model to the next model,
         you might have to preprocess the output. This function is where you can do that.
         '''
+
         log.info("Preprocessing output...")
-         
+
         classes = "0123456789abcdefghijklmnopqrstuvwxyz#"
-        actual = ctcBeamSearch(outputs.buffer, classes, None)
-        log.info(actual)
+        mat = outputs.buffer
+      
+        actual = self.greedy_decoder(mat)
+        print("".join([classes[x] for x in actual if x!=36]))
         
-       
-
-
-
-
